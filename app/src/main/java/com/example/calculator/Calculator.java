@@ -195,12 +195,15 @@ public class Calculator extends Fragment {
 
         }
         else if(s.equals(".")){
-            if(!a.equals("")&&Operator.equals(""))
-                a=a+s;
+            if(!a.equals("")&&Operator.equals("")) {
+                if (!a.contains("."))
+                    a = a + s;
+            }
             else if(!Operator.equals("")){
                 if(b.equals(""))
                     Toast.makeText(getContext(), "Invalid Input", Toast.LENGTH_SHORT).show();
-                else b=b+s;
+                else if(!b.contains("."))
+                    b=b+s;
 
             }
 
@@ -231,7 +234,7 @@ public class Calculator extends Fragment {
         }
         else if(Operator.equals("/")){
             if(b1!=0) {
-                res = a1 - b1;
+                res = a1/ b1;
             }
             else result="Math Error";
         }
