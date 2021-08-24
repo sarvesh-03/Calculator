@@ -2,7 +2,10 @@ package com.example.calculator;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,5 +74,16 @@ public class Result extends Fragment {
     public void setText(String s){
         if(Result!=null)
             Result.setText(s);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        (new ViewModelProvider(getActivity())).get(model.class).getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                setText(s);
+            }
+        });
     }
 }

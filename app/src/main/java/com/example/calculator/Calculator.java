@@ -2,7 +2,9 @@ package com.example.calculator;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +43,7 @@ public class Calculator extends Fragment {
     private LinearLayout l3;
     private LinearLayout l4;
     private LinearLayout l5;
+    private model viewmodel;
 
     /**
      * Use this factory method to create a new instance of
@@ -68,7 +71,7 @@ public class Calculator extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-    private FragmentListener fragmentListener;
+    //private FragmentListener fragmentListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,7 +87,7 @@ public class Calculator extends Fragment {
         };
         LinearLayout linearLayout1;
         textView=view.findViewById(R.id.textView);
-        fragmentListener=(FragmentListener)getActivity();
+        //fragmentListener=(FragmentListener)getActivity();
         linearLayout=view.findViewById(R.id.linearlayout);
         l1=view.findViewById(R.id.l1);
         for (int j=0;j<5;j++) {
@@ -114,7 +117,8 @@ public class Calculator extends Fragment {
             a = "";
             b = "";
             Operator = "";
-            fragmentListener.inputSent("");
+            //fragmentListener.inputSent("");
+            viewmodel.SetResult("");
         } else if (s.equals("DEL")) {
             if (Operator.equals("")&&!a.equals("")) {
                 a = a.substring(0, a.length() - 1);
@@ -239,6 +243,14 @@ public class Calculator extends Fragment {
             else result="Math Error";
         }
         result=res.toString();
-        fragmentListener.inputSent(result);
+        //fragmentListener.inputSent(result);
+        viewmodel.SetResult(result);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewmodel= new ViewModelProvider(getActivity()).get(model.class);
+
     }
 }
